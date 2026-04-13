@@ -1,0 +1,32 @@
+# Time Tracker Application - .gitignore
+
+# Python virtual environment
+.venv/
+
+# Local Python installation
+python/
+
+# Downloaded installer files
+downloads/
+
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Report files (daily JSON reports)
+report/
+
+# Windows executables (if any generated)
+*.exe

@@ -1,0 +1,18 @@
+# Time Tracker Application - Requirements
+#
+# Aceasta aplicatie foloseste DOAR biblioteci standard Python,
+# deci nu necesita instalarea niciunui pachet extern.
+#
+# Biblioteci folosite (toate incluse in Python standard):
+# - tkinter (GUI framework)
+# - json (serializare date)
+# - os (operatii sistem)
+# - threading (fir executie)
+# - time (functii timp)
+# - datetime (manipulare date)
+# - pathlib (cai fisiere)
+#
+# Pentru a instala (daca e nevoie):
+# pip install -r requirements.txt
+#
+# Dar in acest caz, nu e nevoie de nimic!
