@@ -26,16 +26,8 @@ Time tracker/
 ```
 
 ## Cum Să Pornești Aplicația
-
-### Metoda 1: Script Automat
-```powershell
-.\run_app.ps1
-```
-
-### Metoda 2: Manual
-```powershell
-.\.venv\Scripts\activate
-local_python .\src\main.py
+```deschide un terminal nou in folderul curent si ruleaza
+.\start_app.bat
 ```
 
 ## Format Rapoarte Zilnice
