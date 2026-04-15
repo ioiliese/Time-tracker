@@ -6,7 +6,6 @@ O aplicație Python cu interfață grafică pentru urmărirea activităților ș
 
 ✅ **Adauga activități** - Apasă butonul "➕ Adauga Activitate" și introdu numele activității
 ✅ **Timer pe activitate** - Apasă "▶ Start" pentru a porni și "⏹ Stop" pentru a opri cronometrul
-✅ **Timp total** - Afișează/ascunde cu butonul "👁"
 ✅ **Auto-save** - Salvează automat la fiecare 5 minute
 ✅ **Salvare la închidere** - La închiderea aplicației, timpul curent este oprit și salvat automat
 ✅ **Rapoarte zilnice** - Folderul `./report` conține fișier JSON cu timp alocat per activitate per zi
@@ -22,6 +21,7 @@ Time tracker/
 ├── python/                   # Python 3.12.4 instalat local
 ├── .venv/                    # Mediul virtual Python
 ├── run_app.ps1              # Script de pornire aplicație
+├── start_app.bat            # Executabil cu dublu-click pentru pornire
 └── requirements.txt         # Dependințe Python
 ```
 

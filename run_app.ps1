@@ -4,6 +4,8 @@
 if (Test-Path ".\.venv\Scripts\activate") {
     Write-Host "Activez mediul virtual..."
     & ".\.venv\Scripts\activate"
+
+    Set-Alias local_python .\python\python.exe
 } else {
     Write-Host "Mediul virtual nu exista. Fac setup..."
 
