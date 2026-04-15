@@ -122,7 +122,15 @@ class TimeTrackerApp:
 
         # Incepe actualizarea timerelor
         self.update_timers_loop() 
-    
+
+        # Incepe salvarea automata a activitatilor
+        self.auto_save_activities()
+
+    def auto_save_activities(self):
+        """"Salveaza automat timpul petrecut pentru fiecare activitate"""
+        self.save_activities()
+        self.root.after(self.auto_save_interval, self.auto_save_activities)
+
     def get_report_file_for_date(self, date_str):
         """Returneaza calea fisierului de raport pentru data specificata"""
         return self.report_dir / f"{date_str}.json"
