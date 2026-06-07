@@ -74,6 +74,12 @@ if (Test-Path ".\.venv\Scripts\activate") {
     # Activez mediul virtual
     Write-Host "Activez mediul virtual..."
     & ".\.venv\Scripts\activate"
+
+    # Curatam folderul downloads dupa ce setup-ul si lansarea au fost cu succes
+    if (Test-Path ".\downloads") {
+        Write-Host "Sterg folderul temporar downloads..."
+        Remove-Item -Path ".\downloads" -Recurse -Force -ErrorAction SilentlyContinue
+}
 }
 
 Write-Host "Pornesc aplicatia Time Tracker in fundal..."
