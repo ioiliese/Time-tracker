@@ -3,8 +3,7 @@
 # Python virtual environment
 .venv/
 
-# Downloaded installer files
-downloads/
+tags_for_activities/
 
 # Python bytecode and cache
 __pycache__/
