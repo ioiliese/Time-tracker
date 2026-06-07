@@ -1,11 +1,33 @@
 # Script de pornire pentru Time Tracker App
 
+# Ne asiguram ca scriptul ruleaza mereu din folderul in care este salvat
+Set-Location -Path $PSScriptRoot
+
+# Functie pentru a gasi executabilul Python pe sistem
+function Get-PythonPath {
+    $cmd = Get-Command "python" -ErrorAction SilentlyContinue
+    if ($cmd) { return $cmd.Source }
+
+    $paths = @(
+        "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe",
+        "$env:LOCALAPPDATA\Programs\Python\Python311\python.exe",
+        "$env:PROGRAMFILES\Python312\python.exe",
+        "$env:PROGRAMFILES\Python311\python.exe",
+        "C:\Python312\python.exe"
+    )
+    foreach ($p in $paths) {
+        if (Test-Path $p) { return $p }
+    }
+    return $null
+}
+
+$pythonExe = Get-PythonPath
+
 # Verific daca mediul virtual exista
 if (Test-Path ".\.venv\Scripts\activate") {
     Write-Host "Activez mediul virtual..."
     & ".\.venv\Scripts\activate"
 
-    Set-Alias local_python .\python\python.exe
 } else {
     Write-Host "Mediul virtual nu exista. Fac setup..."
 
@@ -20,15 +42,28 @@ if (Test-Path ".\.venv\Scripts\activate") {
         Invoke-WebRequest "https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe" -OutFile ".\downloads\python-3.12.4-amd64.exe"
     }
 
-    # Instaleaza Python daca nu exista
-    if (!(Test-Path ".\python\python.exe")) {
-        Write-Host "Instalez Python 3.12.4..."
-        .\downloads\python-3.12.4-amd64.exe InstallAllUsers=0 TargetDir="$PWD\python" PrependPath=0
+    # Instaleaza Python doar daca nu l-am gasit nicaieri
+    if (-not $pythonExe) {
+        Write-Host "Instalez Python 3.12.4 (poate dura 1-2 minute)..."
+        Start-Process -FilePath ".\downloads\python-3.12.4-amd64.exe" -Wait
+        
+        Write-Host "Astept sa finalizezi instalarea..."
+        $timeout = 300
+        while (-not $pythonExe -and $timeout -gt 0) {
+            Start-Sleep -Seconds 2
+            $pythonExe = Get-PythonPath
+            $timeout--
+        }
+        
+        if (-not $pythonExe) {
+            Write-Host "Eroare: Nu am putut gasi Python dupa instalare."
+            exit
+        }
     }
 
     # Creez alias si mediu virtual
-    Write-Host "Creez mediu virtual..."
-    Set-Alias local_python .\python\python.exe
+    Write-Host "Creez mediu virtual folosind $pythonExe..."
+    Set-Alias local_python $pythonExe
     local_python -m venv .venv
 
     # Activez mediul virtual
@@ -36,5 +71,5 @@ if (Test-Path ".\.venv\Scripts\activate") {
     & ".\.venv\Scripts\activate"
 }
 
-Write-Host "Pornesc aplicatia Time Tracker..."
-local_python .\src\main.py
+Write-Host "Pornesc aplicatia Time Tracker in fundal..."
+Start-Process -FilePath ".\.venv\Scripts\pythonw.exe" -ArgumentList ".\src\main.py"
