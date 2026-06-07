@@ -5,8 +5,13 @@ Set-Location -Path $PSScriptRoot
 
 # Functie pentru a gasi executabilul Python pe sistem
 function Get-PythonPath {
-    $cmd = Get-Command "python" -ErrorAction SilentlyContinue
-    if ($cmd) { return $cmd.Source }
+    # Cautam python in PATH, dar ignoram alias-ul (stub-ul) din WindowsApps care deschide Microsoft Store
+    $cmds = Get-Command "python" -All -ErrorAction SilentlyContinue
+    foreach ($cmd in $cmds) {
+        if ($cmd.Source -and $cmd.Source -notmatch "WindowsApps") {
+            return $cmd.Source
+        }
+    }
 
     $paths = @(
         "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe",
